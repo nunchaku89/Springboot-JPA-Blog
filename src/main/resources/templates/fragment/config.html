@@ -1,0 +1,29 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <!-- configFragment -->
+    <th:block th:fragment="configFragment">
+
+        <!-- css, js library -->
+        <!--<link rel="stylesheet" th:href="@{/css/common/common.css}" >-->
+
+
+        <!-- Content Page 의 CSS fragment 삽입 -->
+        <th:block layout:fragment="css"></th:block>
+
+        <!-- Content Page 의 script fragment 삽입 -->
+        <th:block layout:fragment="script">
+            <!--<script th:src="@{https://code.jquery.com/jquery-latest.js}"></script>-->
+            <script src="/resources/js/jquery-3.6.0.js"></script>
+            <script src="/resources/js/jQuery.serializeObject-master/jquery.serializeObject.js"></script>
+            <!--<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>-->
+            <!--<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jQuery.serializeObject/2.0.3/jquery.serializeObject.min.js}"></script>-->
+            <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js}"></script>
+            <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
+            <link href="/resources/summernote/summernote-bs4.css" rel="stylesheet">
+            <script src="/resources/summernote/summernote-bs4.js"></script>
+        </th:block>
+
+    </th:block>
+</html>

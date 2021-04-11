@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default_layout">
+    <head>
+        <script th:inline="javascript">
+            $(document).ready(function () {
+                $("button[data-role=btnDelete]").click(function () {
+                    let id = $("#id").text();
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/api/board/" + id,
+                        data: JSON.stringify(id),
+                        contentType: "application/json"
+                    }).done(function (resp) {
+                        alert("삭제가 완료되었습니다.");
+                        location.href = "/";
+                    }).fail(function (error) {
+                        alert(JSON.stringify(error));
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="container">
+                <form name="updateForm" action="" method="post">
+                    <div>
+                        글번호: <span id="id"><i th:text="${detail.id}"></i></span>
+                        글번호: <span><i th:text="${detail.user.username}"></i></span>
+                    </div>
+                    <hr>
+                    <div>
+                        <h3 th:text="${detail.title}"></h3>
+                    </div>
+                    <hr>
+                    <div>
+                        <div th:utext="${detail.content}"></div>
+                    </div>
+                    <hr>
+                    <a th:hidden="${principal.username ne detail.user.username? 'true':'false'}" th:href="@{'/board/update/' + ${detail.id}}" class="btn btn-warning">수정</a>
+                    <button th:hidden="${principal.username ne detail.user.username? 'true':'false'}" sec:authorize="isAuthenticated()" type="button" class="btn btn-danger" data-role="btnDelete">삭제</button>
+                    <a th:href="@{'/'}" class="btn btn-secondary">목록으로</a>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

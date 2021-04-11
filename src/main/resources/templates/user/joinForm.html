@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default_layout">
+    <head>
+        <!--<script th:src="@{/resources/js/user.js}"></script>-->
+        <script th:inline="javascript">
+            $(document).ready(function () {
+                $("button[data-role=btnRegister]").click(function () {
+                    let data = $("form[name=joinForm]").serializeObject();
+                    console.log(data)
+                    $.ajax({
+                        type: "post",
+                        url: "/auth/joinProc",
+                        data: JSON.stringify(data), // http body data
+                        contentType: "application/json;charset-utf-8" // body data가 어떤 type인지(MIME)
+                    }).done(function (resp) {
+                        alert("회원가입이 완료되었습니다.");
+                        console.log(resp);
+                        location.href = "/";
+                    }).fail(function (error) {
+                        alert(JSON.stringify(error));
+                    });
+                });
+
+            });
+        </script>
+        <title></title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="container">
+                <form name="joinForm" action="">
+                    <div class="form-group">
+                        <label for="username">username:</label>
+                        <input type="text" class="form-control" placeholder="사용자 이름을 입력 해주세요" id="username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" placeholder="비밀번호를 입력 해주세요" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address:</label>
+                        <input type="email" class="form-control" placeholder="이메일을 입력 해주세요" id="email" name="email">
+                    </div>
+                    <button type="button" class="btn btn-primary" data-role="btnRegister">회원가입</button>
+                    <button type="button" class="btn btn-secondary">취소</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
