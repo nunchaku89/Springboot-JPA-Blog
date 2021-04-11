@@ -17,9 +17,24 @@
                     </div>
                 </div>
 
-                <ul class="pagination justify-content-center">
-                    <li th:class="${boardList.first} ? 'page-item disabled':'page-item'"><a class="page-link" th:href="@{'?page=' + ${boardList.number - 1}}">Previous</a></li>
-                    <li th:class="${boardList.last} ? 'page-item disabled':'page-item'"><a class="page-link" th:href="@{'?page=' + ${boardList.number + 1}}">Next</a></li>
+                <ul class="pagination justify-content-center"
+                    th:with="start=${T(Math).floor(boardList.number/10)*10 + 1},
+                     last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
+                    <li th:class="${boardList.first} ? 'page-item disabled':'page-item'">
+                        <a class="page-link" th:href="@{'?page=1'}">first</a>
+                    </li>
+                    <li th:class="${boardList.first} ? 'page-item disabled':'page-item'">
+                        <a class="page-link" th:href="@{'?page=' + ${boardList.number}}">&lt;</a>
+                    </li>
+                    <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardList.number + 1} ? 'page-item active':'page-item'">
+                        <a class="page-link" th:text="${page}" th:href="@{'?page=' + ${page}}"></a>
+                    </li>
+                    <li th:class="${boardList.last} ? 'page-item disabled':'page-item'">
+                        <a class="page-link" th:href="@{'?page=' + ${boardList.number + 2}}">&gt;</a>
+                    </li>
+                    <li th:class="${boardList.last} ? 'page-item disabled':'page-item'">
+                        <a class="page-link" th:href="@{'?page=' + ${boardList.totalPages}}">last</a>
+                    </li>
                 </ul>
             </div>
         </div>
