@@ -38,11 +38,12 @@
                     </div>
                     <hr>
                         <div th:utext="${detail.content}"></div>
-                    </div>
                     <hr>
-                    <a th:hidden="${principal.username ne detail.user.username? 'true':'false'}" th:href="@{'/board/update/' + ${detail.id}}" class="btn btn-warning">수정</a>
-                    <button th:hidden="${principal.username ne detail.user.username? 'true':'false'}" sec:authorize="isAuthenticated()" type="button" class="btn btn-danger" data-role="btnDelete">삭제</button>
-                    <a th:href="@{'/'}" class="btn btn-secondary">목록으로</a>
+                    <div>
+                        <a th:hidden="${principal.username ne detail.user.username? 'true':'false'}" th:href="@{'/board/update/' + ${detail.id}}" class="btn btn-warning">수정</a>
+                        <button th:hidden="${principal.username ne detail.user.username? 'true':'false'}" type="button" class="btn btn-danger" data-role="btnDelete">삭제</button>
+                        <a th:href="@{'/'}" class="btn btn-secondary">목록으로</a>
+                    </div>
                 </form>
             </div>
         </div>

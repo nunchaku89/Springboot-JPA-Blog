@@ -19,18 +19,35 @@ public class BoardApiController {
     @Autowired
     private BoardService boardService;
 
+    /**
+     * 글 등록 실행
+     * @param board
+     * @param principal
+     * @return ResponseDTO<Integer>
+     */
     @PostMapping("/api/board")
     public ResponseDTO<Integer> insertBoard(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
         boardService.insertBoard(board, principal.getUser());
         return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);
     }
 
+    /**
+     * 글 삭제 실행
+     * @param id
+     * @return ResponseDTO<Integer>
+     */
     @DeleteMapping("/api/board/{id}")
     public ResponseDTO<Integer> deleteBoardById(@PathVariable int id) {
         boardService.deleteBoardById(id);
         return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);
     }
 
+    /**
+     * 글 수정 실행
+     * @param id
+     * @param board
+     * @return ResponseDTO<Integer>
+     */
     @PutMapping("/api/board/{id}")
     public ResponseDTO<Integer> updateBoardById(@PathVariable int id, @RequestBody Board board) {
         boardService.updateBoardById(id, board);

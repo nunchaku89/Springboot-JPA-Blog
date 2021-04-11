@@ -20,13 +20,22 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+    /**
+     * 인덱스 페이지
+     * @param model
+     * @param pageable
+     * @return String
+     */
     @GetMapping("/")
     public String index(Model model, @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC)Pageable pageable) { // 컨트롤러에서 세션을 어떻게 찾는지?
         model.addAttribute("boardList", boardService.boardList(pageable));
         return "index";
     }
 
-    // USER 권한 필요
+    /**
+     * 글 쓰기 페이제
+     * @return String
+     */
     @GetMapping("/board/insertForm")
     public String insertForm() {
         return "/board/insertForm";
@@ -45,6 +54,12 @@ public class BoardController {
         return "/board/detail";
     }
 
+    /**
+     * 글 수정 페이지
+     * @param id
+     * @param model
+     * @return String
+     */
     @GetMapping("/board/update/{id}")
     public String updateForm(@PathVariable int id, Model model) {
         model.addAttribute("detail", boardService.boardDetail(id));

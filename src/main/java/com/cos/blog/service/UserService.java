@@ -20,7 +20,7 @@ public class UserService {
     private BCryptPasswordEncoder encodeer;
 
     @Transactional
-    public void register(User user) {
+    public void join(User user) {
         String rawPassword = user.getPassword();
         String encPassword = encodeer.encode(rawPassword);
         user.setPassword(encPassword);
@@ -28,5 +28,17 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
+    public void updateUser(User user) {
+        User persistance = userRepository.findById(user.getId())
+                .orElseThrow(()->{
+                    return new IllegalArgumentException("회원 찾기에 실패하였습니다.");
+                });
+        String rawPassword = user.getPassword();
+        String encPassword = encodeer.encode(rawPassword);
+
+        persistance.setPassword(encPassword);
+        persistance.setEmail(user.getEmail());
+    }
 
 }
